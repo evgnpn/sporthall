@@ -1,0 +1,40 @@
+﻿@model ITrainingStatus
+
+@if (Model.TrainingStatus == TrainingStatus.AlreadyPassed)
+{
+    <span class="footer-message text-warning">
+        <i class="fas fa-info-circle pr-1"></i>
+        Тренировка уже прошла
+    </span>
+}
+else if (Model.TrainingStatus == TrainingStatus.InProcess)
+{
+    <span class="footer-message text-warning">
+        <i class="fas fa-info-circle pr-1"></i>
+        Тренировка уже идет
+    </span>
+}
+else
+{
+    @if (Model.TrainingSubscribeStatus == TrainingSubscribeStatus.Already)
+    {
+        <span class="footer-message text-info">
+            <i class="fas fa-info-circle pr-1"></i>
+            Вы записаны на эту тренеровку!
+        </span>
+    }
+    else if (Model.TrainingSubscribeStatus == TrainingSubscribeStatus.Busy)
+    {
+        <span class="footer-message text-warning">
+            <i class="fas fa-info-circle pr-1"></i>
+            @TempData["BusyMessage"]
+        </span>
+    }
+    else
+    {
+        <span class="footer-message text-info">
+            <i class="fas fa-info-circle pr-1"></i>
+            Запись доступна!
+        </span>
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model Sporthall.WebUI.ViewModels.Halls.UpdateHallViewModel
+
+@{
+    ViewData["Title"] = "Редактирование информации о зале";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Редактирование информации о зале
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <form id="hallEditForm" asp-area="" asp-controller="Halls" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <partial name="/Views/Halls/Partials/_EditPartial.cshtml" />
+        </form>
+    </div>
+    <div class="content-footer rounded-bottom">
+        <div class="row align-items-center justify-content-end">
+            <div class="col-md-auto">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" asp-for="Active">
+                    <label class="custom-control-label" asp-for="Active">Активировать</label>
+                </div>
+            </div>
+            <div class="col-md-auto my-2 text-right">
+                <button form="hallEditForm" type="submit" class="btn btn-sm btn-info">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

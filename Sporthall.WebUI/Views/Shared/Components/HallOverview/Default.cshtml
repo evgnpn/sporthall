@@ -1,0 +1,88 @@
+﻿@model Sporthall.WebUI.ViewModels.Halls.ViewHallViewModel
+
+<div class="row bg-white">
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Зал:
+        </div>
+        <ul class="list">
+            <li>Название: @Model.Name</li>
+            <li>Адрес: @Model.Address</li>
+            <li>Телефон: @Model.PhoneNumber</li>
+            <li>Описание: @Model.Description</li>
+        </ul>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-user-alt pr-1"></i>
+            Индивидуальные тренировки зала:
+        </div>
+        <ol class="list">
+            @if (Model.SoloTrainings != null && Model.SoloTrainings.Count > 0)
+            {
+                @foreach (var soloTraining in Model.SoloTrainings)
+                {
+                    <li>
+                        <a asp-area="Trainings" asp-controller="Solo" asp-action="View" asp-route-id="@soloTraining.Id">
+                            @soloTraining.Description
+                        </a>
+                        <span class="pl-1">(@soloTraining.Date.ToShortDateString() с @soloTraining.BeginTime.ToString(@"hh\:mm") до @soloTraining.EndTime.ToString(@"hh\:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет тренеровок
+                </li>
+            }
+        </ol>
+        <div class="list-header">
+            <i class="fas fa-users pr-1"></i>
+            Групповые тренировки зала:
+        </div>
+        <ol class="list">
+            @if (Model.GroupTrainings != null && Model.GroupTrainings.Count > 0)
+            {
+                @foreach (var groupTraining in Model.GroupTrainings)
+                {
+                    <li>
+                        <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id">
+                            @groupTraining.Description
+                        </a>
+                        <span class="pl-1">(@groupTraining.Date.ToShortDateString() с @groupTraining.BeginTime.ToString(@"hh\:mm") до @groupTraining.EndTime.ToString(@"hh\:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет тренеровок
+                </li>
+            }
+        </ol>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="far fa-calendar-alt pr-1"></i>
+            Расписание зала:
+        </div>
+        <ul class="list">
+            @foreach (var schedule in Model.HallScheduleSelects)
+            {
+                <li>
+                    @if (schedule.Selected)
+                    {
+                        @(schedule.Model.BeginTime.ToString(@"hh\:mm") + " - " + schedule.Model.EndTime.ToString(@"hh\:mm"))
+                    }
+                    else
+                    {
+                        @("выходной")
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<hr />

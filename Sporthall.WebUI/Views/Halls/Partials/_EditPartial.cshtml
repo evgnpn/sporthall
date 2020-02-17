@@ -1,0 +1,101 @@
+﻿@model Sporthall.WebUI.ViewModels.Halls.EditHallViewModel
+
+<script>
+    $(function () {
+        let timeRangeInputs = $("input[name=timeRange]");
+
+        timeRangeInputs.daterangepicker({
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 1,
+            locale: {
+                format: 'HH:mm',
+                applyLabel: "Применить",
+                cancelLabel: "Отмена"
+            }
+        }).on("show.daterangepicker", function (ev, picker) {
+            picker.container.find(".calendar-table").remove();
+        });
+
+        $("form").on("submit", function () {
+            let formElem = $(this);
+            timeRangeInputs.each(function (i, elem) {
+                var beginTimeInput = formElem.find("#beginTime-" + i);
+                var endTimeInput = formElem.find("#endTime-" + i);
+                var times = $(elem).val().split(" - ");
+                beginTimeInput.val(times[0]);
+                endTimeInput.val(times[1]);
+            });
+        });
+    });
+</script>
+
+<div class="row justify-content-between">
+    <div class="col-md my-2">
+        <div class="form-group mb-4">
+            <label asp-for="Name" class="list-header">
+                <i class="far fa-building pr-1"></i>
+                Название зала
+            </label>
+            <input asp-for="Name" class="form-control form-control-sm" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Description" class="list-header">
+                <i class="far fa-comment-alt pr-1"></i>
+                Описание
+            </label>
+            <textarea rows="7" asp-for="Description" class="form-control form-control-sm"></textarea>
+            <span class="text-danger small" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Address" class="list-header">
+                <i class="far fa-calendar-alt pr-1"></i>
+                Адрес
+            </label>
+            <input asp-for="Address" class="form-control form-control-sm">
+            <span asp-validation-for="Address" class="text-danger small"></span>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="PhoneNumber" class="list-header">
+                <i class="fas fa-phone-alt pr-1"></i>
+                Номер телефона
+            </label>
+            <input asp-for="PhoneNumber" class="form-control form-control-sm">
+            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+        </div>
+    </div>
+    <div class="col-md-5 my-2">
+        <div class="list-header">
+            <i class="far fa-calendar-alt pr-1"></i>
+            Расписание
+        </div>
+        <ul class="list pl-0">
+            @for (var i = 0; i < Model.HallScheduleSelects?.Count; i++)
+            {
+            <li>
+                <div class="form-group">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col">
+                            <label for="timeRange-@i">
+                                @ScheduleHelper.GetDayName(Model.HallScheduleSelects[i].Model.DayOfWeek)
+                            </label>
+                            <input id="timeRange-@i" name="timeRange" class="form-control form-control-sm" value="@Model.HallScheduleSelects[i].Model.BeginTime.ToString(@"hh\:mm") - @Model.HallScheduleSelects[i].Model.EndTime.ToString(@"hh\:mm")" />
+                            <input id="beginTime-@i" type="hidden" asp-for="HallScheduleSelects[i].Model.BeginTime" />
+                            <input id="endTime-@i" type="hidden" asp-for="HallScheduleSelects[i].Model.EndTime" />
+                            <input type="hidden" asp-for="HallScheduleSelects[i].Model.DayOfWeek">
+                        </div>
+                        <div class="col-auto">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" asp-for="HallScheduleSelects[i].Selected" class="custom-control-input" id="scheduleCheck-@i">
+                                <label class="custom-control-label" for="scheduleCheck-@i"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+<div asp-validation-summary="All"></div>

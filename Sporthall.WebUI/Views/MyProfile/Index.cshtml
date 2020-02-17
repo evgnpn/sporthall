@@ -1,0 +1,206 @@
+﻿@model Sporthall.WebUI.ViewModels.Profile.ViewProfileViewModel
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    @Model.LastName @Model.FirstName
+                </h6>
+            </div>
+            <div class="col-sm-auto my-3 text-sm-right">
+                <form asp-area="" asp-controller="MyProfile" asp-action="SignOut" method="post">
+                    <button type="submit" class="btn btn-link content-title-text p-0 m-0">
+                        Выход
+                        <i class="fas fa-sign-out-alt pl-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInRole("Manager") || User.IsInRole("GeneralManager"))
+    {
+        <div class="content-body">
+            <div class="row justify-content-between">
+                <div class="col-md mb-4">
+                    <div class="list-header">
+                        <i class="fas fa-tools pr-1"></i>
+                        Управление
+                    </div>
+                    <ul class="list m-0">
+                        <li>
+                            <a asp-area="Trainings" asp-controller="Solo" asp-action="Add" target="_blank">
+                                Добавить индивидуальную тренеровку
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Trainings" asp-controller="Group" asp-action="Add" target="_blank">
+                                Добавить групповую тренеровку
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Halls" asp-action="Add" target="_blank">
+                                Добавить зал
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="CoachUsers" asp-action="Add" target="_blank">
+                                Добавить тренера
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="Managers" asp-action="Add" target="_blank">
+                                Добавить менеджера
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md mb-4">
+                    <div class="list-header">
+                        <i class="fas fa-edit pr-1"></i>
+                        Добавить/Изменить/Удалить
+                    </div>
+                    <ul class="list m-0">
+                        <li>
+                            <a asp-area="Trainings" asp-controller="Solo" asp-action="index" target="_blank">
+                                Индивидуальные тренеровки
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Trainings" asp-controller="Group" asp-action="index" target="_blank">
+                                Групповые тренеровки
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Halls" asp-action="index" target="_blank">
+                                Залы
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="CoachUsers" asp-action="index" target="_blank">
+                                Тренеры
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="Managers" asp-action="index" target="_blank">
+                                Менеджеры
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="content-body">
+        <div class="row">
+            <div class="col-md my-2">
+                <div class="list-header">
+                    <i class="fas fa-dumbbell pr-1"></i>
+                    Мои тренировки (индивидуальные)
+                </div>
+                <ul class="list">
+                    @if (Model.SoloTrainings != null && Model.SoloTrainings.Count > 0)
+                    {
+
+                        @foreach (var soloTraining in Model.SoloTrainings)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Solo" asp-action="View" asp-route-id="@soloTraining.Id">
+                                    @soloTraining.Description
+                                </a>
+                                <span class="font-weight-normal pl-1">
+                                    (@soloTraining.Date.ToShortDateString() с @soloTraining.BeginTime.ToString(@"hh\:mm") до @soloTraining.EndTime.ToString(@"hh\:mm"))
+                                </span>
+                            </li>
+                        }
+
+                    }
+                    else
+                    {
+                        <li class="list-unstyled">
+                            нет записей
+                        </li>
+                    }
+                </ul>
+                <div class="list-header">
+                    <i class="fas fa-user-alt pr-1"></i>
+                    Мои тренировки (групповые)
+                </div>
+                <ol class="list m-0">
+
+                    @if (Model.GroupTrainings != null && Model.GroupTrainings.Count > 0)
+                    {
+                        @foreach (var groupTraining in Model.GroupTrainings)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id">
+                                    @groupTraining.Description
+                                </a>
+                                <span class="font-weight-normal pl-1">
+                                    (@groupTraining.Date.ToShortDateString() с @groupTraining.BeginTime.ToString(@"hh\:mm") до @groupTraining.EndTime.ToString(@"hh\:mm"))
+                                </span>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="list-unstyled">
+                            нет записей
+                        </li>
+                    }
+                </ol>
+            </div>
+            <div class="col-md my-2">
+                <div class="list-header">
+                    <i class="fas fa-chalkboard-teacher pr-1"></i>
+                    Тренеры к которым я записан
+                </div>
+                <ol class="list m-0">
+
+                    @*@if (Model.UserCoachUsers != null && Model.UserCoachUsers.Count > 0)
+                        {
+                            @foreach (var trainer in Model.UserCoachUsers)
+                            {
+                                <li>
+                                    <a asp-area="Workers" asp-controller="CoachUsers" asp-action="View" asp-route-id="@trainer.Id" target="_blank">
+                                        @trainer.User.FirstName  @trainer.User.LastName @trainer.User.SurName
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-unstyled">
+                                нет записей
+                            </li>
+                        }*@
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <div class="list-header">
+            <i class="fas fa-user-cog pr-1"></i>
+            Настройки профиля
+        </div>
+        <ul class="list m-0">
+            <li>
+                <a asp-area="" asp-controller="MyProfile" asp-action="Edit">
+                    Редактировать данные
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="MyProfile" asp-action="changepassword">
+                    Изменить пароль
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="content-footer rounded-bottom">
+    </div>
+</div>

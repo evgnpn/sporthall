@@ -1,0 +1,105 @@
+﻿@model List<GroupTraining>
+
+<script>
+    $("#search").on("input", function () {
+        let val = this.value;
+
+
+
+        
+
+    });
+</script>
+
+<div class="content">
+    <div class="content-header">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Групповые тренировки
+                </h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body-edge">
+        <div class="input-group p-3">
+            <input id="search" class="form-control form-control-sm" />
+        </div>
+    </div>
+
+    <div class="content-body-edge" id="search-result">
+        @foreach (var groupTraining in Model)
+        {
+            <div class="info">
+                <div class="info-header">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-md d-flex my-2">
+                            <h6 class="info-header-title">
+                                <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id">
+                                    <i class="fas fa-dumbbell pr-1"></i>
+                                    @groupTraining.Name
+                                </a>
+                            </h6>
+                        </div>
+
+                        <div class="col-md-auto d-flex my-2">
+                            <span>
+                                <i class="fas fa-hashtag pr-1"></i>
+                                @groupTraining.Id
+                            </span>
+                        </div>
+
+
+                            <div class="col-md-auto d-flex my-2">
+                                <div class="info-date">
+                                    <i class="far fa-calendar-alt pr-1"></i>
+                                    @groupTraining.Date.ToShortDateString() (@groupTraining.BeginTime.ToString(@"hh\:mm") - @groupTraining.EndTime.ToString(@"hh\:mm"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="info-body">
+                    <p>
+                        @groupTraining.Description
+                    </p>
+                </div>
+
+                <div class="info-footer">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-md my-2 d-flex">
+                            <div>@groupTraining.Capacity</div>
+                        </div>
+
+                        <div class="col-md-auto my-2 d-flex">
+
+                            <div class="dropdown show">
+                                <button class="btn btn-link dropdown-toggle info-action" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    действие
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" asp-area="Management" asp-controller="GroupTrainings" asp-action="Edit" asp-route-id="@groupTraining.Id">
+                                        Изменить
+                                    </a>
+                                    <a class="dropdown-item" asp-area="Management" asp-controller="GroupTrainings" asp-action="Delete" asp-route-id="@groupTraining.Id">
+                                        Удалить
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="content-footer">
+        <div class="row">
+            <div class="col-md my-2 text-right">
+
+            </div>
+        </div>
+    </div>
+</div>

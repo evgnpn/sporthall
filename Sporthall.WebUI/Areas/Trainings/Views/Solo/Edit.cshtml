@@ -1,0 +1,31 @@
+﻿@model Sporthall.WebUI.ViewModels.Trainings.Solo.UpdateSoloTrainingViewModel
+
+@{
+    ViewData["Title"] = "Изменить индивидуальную тренировку";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Изменить индивидуальную тренеровку
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <form id="createForm" asp-area="Trainings" asp-controller="Solo" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <partial name="~/Areas/Trainings/Views/Solo/Partials/_EditPartial.cshtml" />
+        </form>
+    </div>
+    <div class="content-footer rounded-bottom">
+        <div class="row">
+            <div class="col-md my-2 text-right">
+                <button form="createForm" type="submit" class="btn btn-sm btn-info">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>

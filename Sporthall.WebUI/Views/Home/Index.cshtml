@@ -1,0 +1,23 @@
+﻿@model IndexHomeViewModel
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="content">
+
+    <div class="content-header"></div>
+    @*<div class="content-body text-center">
+            <img src="~/img/rukibambuki2rukibazuki.png" style="width: 100%" alt="" />
+        </div>*@
+
+    <div class="content-body">
+
+        @foreach (var hall in Model.Halls)
+        {
+            @await Component.InvokeAsync("HallOverview", hall)
+        }
+    </div>
+
+    <div class="content-footer"></div>
+</div>

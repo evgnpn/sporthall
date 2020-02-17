@@ -1,0 +1,39 @@
+﻿footer {
+	margin-top: auto;
+	height: auto;
+	background-color: #3a4c5f;
+	box-shadow: 0 -2px 7px 0px rgba(59, 79, 99, 0.32);
+	flex-grow: 0;
+	flex-shrink: 0
+}
+
+footer .ls-group .ls-header {
+	color: #bed1c2;
+	font-size: .79rem;
+	margin-bottom: 12px;
+	font-weight: 600;
+	display: block;
+}
+
+footer .ls-group .ls {
+	padding-left: 19px;
+	margin: 0;
+	font-size: .79rem;
+	color: #abbecc;
+	list-style: none;
+	border-left: 1px solid #647383;
+}
+
+footer .ls-group .ls li {
+	padding: 2px 0;
+}
+
+footer .ls-group .ls li a {
+	color: #d4e1f3;
+	text-decoration: none;
+}
+
+footer .ls-group .ls li a:hover {
+	color: #bacadc;
+	text-decoration: underline;
+}

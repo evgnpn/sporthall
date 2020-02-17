@@ -1,0 +1,32 @@
+﻿@model Sporthall.WebUI.ViewModels.Workers.Managers.UpdateManagerInfoViewModel
+
+@{
+    ViewData["Title"] = "Изменить информацию о менеджере";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Изменить информацию о менеджере
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <form id="editManagerForm" asp-area="Workers" asp-controller="Managers" asp-action="Edit" method="post">
+            <partial name="~/Areas/Workers/Views/Managers/Partials/_EditPartial.cshtml" />
+        </form>
+    </div>
+    <div class="content-footer rounded-bottom">
+        <div class="row">
+            <div class="col-md my-2 text-right">
+                <button form="editManagerForm" type="submit" class="btn btn-sm btn-info">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model List<Sporthall.WebUI.ViewModels.Trainings.Group.ViewGroupTrainingViewModel>
+
+@{
+    ViewData["Title"] = "Групповые тренеровки";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Групповые тренеровки
+                </h6>
+            </div>
+            @if (User.IsInRole("Manager") || User.IsInRole("GeneralManager"))
+            {
+                <div class="col-sm-auto my-3 text-sm-right">
+                    <a asp-area="Trainings" asp-controller="Group" asp-action="Add" class="content-title-text p-0 m-0" target="_blank">
+                        Добавить групповую тренеровку
+                        <i class="fas fa-plus-circle pl-1"></i>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="content-body p-0">
+        <table class="table table-light table-hover table-striped table-custom text-center m-0">
+            <tr>
+                <th>Описание</th>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Зал</th>
+                <th><i class="fas fa-info-circle"></i></th>
+            </tr>
+            @foreach (var groupTraining in Model)
+            {
+                <tr>
+                    <td>@groupTraining.Description</td>
+                    <td>@groupTraining.Date.ToShortDateString()</td>
+                    <td>@groupTraining.BeginTime.ToString(@"hh\:mm") - @groupTraining.EndTime.ToString(@"hh\:mm")</td>
+                    <td>
+                        @if (groupTraining.Hall != null)
+                        {
+                            <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@groupTraining.Hall.Id">
+                                @groupTraining.Hall.Description
+                            </a>
+                            @("(" + groupTraining.Hall.Address + ")")
+                        }
+                        else
+                        {
+                            @("нет информации")
+                        }
+                    </td>
+                    <td>
+                        <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id" target="_blank">
+                            Подробно
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="content-footer rounded-bottom">
+    </div>
+</div>

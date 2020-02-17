@@ -1,0 +1,21 @@
+﻿@inject SignInManager<User> SignInManager
+@inject AppUserManager UserManager
+
+<div class="d-flex align-items-center">
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a class="nav-link" style="font-size: 12px; font-weight: 700; line-height:25px; color: #d8d0ea;" asp-area="" asp-controller="MyProfile" asp-action="Index">
+            @User.Identity.Name
+        </a>
+    }
+    else
+    {
+        <a class="nav-link" style="font-size:12px; font-weight:500; line-height:25px;" asp-area="" asp-controller="Home" asp-action="Register">
+            Регистрация
+        </a>
+        <a class="btn btn-sm login-btn" style="font-size:12px; line-height:25px;" asp-area="" asp-controller="Home" asp-action="Login">
+            Вход
+        </a>
+    }
+</div>

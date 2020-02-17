@@ -1,0 +1,32 @@
+﻿@model Sporthall.WebUI.ViewModels.Trainings.Group.CreateGroupTrainingViewModel
+
+@{
+    ViewData["Title"] = "Добавить групповую тренировку";
+}
+
+<div class="content">
+    <div class="content-header">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Назначить групповую тренеровку
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <form id="addGroupTrainingForm" asp-area="Management" asp-controller="GroupTrainings" asp-action="Add" method="post">
+            <partial name="~/Areas/Management/Views/GroupTrainings/Partials/_EditPartial.cshtml" />
+        </form>
+    </div>
+    <div class="content-footer">
+        <div class="row">
+            <div class="col-md my-2 text-right">
+                <button form="addGroupTrainingForm" type="submit" class="btn btn-sm btn-info">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

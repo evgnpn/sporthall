@@ -1,0 +1,65 @@
+﻿@model List<Sporthall.WebUI.ViewModels.Workers.CoachUsers.ViewCoachInfoViewModel>
+
+@{
+    ViewData["Title"] = "Тренеры";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Все тренера
+                </h6>
+            </div>
+            @if (User.IsInRole("Manager") || User.IsInRole("GeneralManager"))
+            {
+                <div class="col-sm-auto my-3 text-sm-right">
+                    <a asp-area="Workers" asp-controller="CoachUsers" asp-action="Add" class="content-title-text p-0 m-0" target="_blank">
+                        Добавить тренера
+                        <i class="fas fa-plus-circle pl-1"></i>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="content-body p-0">
+        <table class="table table-light table-striped table-custom text-center m-0">
+            <tr>
+                <th>ФИО</th>
+                <th>Описание</th>
+                <th>Специальность</th>
+                @if (User.IsInRole("Manager") || User.IsInRole("GeneralManager"))
+                {
+                    <th></th>
+                    <th></th>
+                }
+                <th><i class="fas fa-info-circle"></i></th>
+            </tr>
+            @foreach (var viewCoachViewModel in Model)
+            {
+                <tr>
+                    <td>@viewCoachViewModel.CoachUser.LastName @viewCoachViewModel.CoachUser.FirstName @viewCoachViewModel.CoachUser.SurName</td>
+                    <td>@viewCoachViewModel.Speciality</td>
+                    @if (User.IsInRole("Manager") || User.IsInRole("GeneralManager"))
+                    {
+                        <td>
+                            <a asp-area="Workers" asp-controller="CoachUsers" asp-action="Edit" asp-route-id="@viewCoachViewModel.CoachUser.Id" class="badge badge-warning" target="_blank">
+                                Изменить
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-area="Workers" asp-controller="CoachUsers" asp-action="Delete" asp-route-id="@viewCoachViewModel.CoachUser.Id" class="btn btn-outline-danger badge" target="_blank">
+                                Удалить
+                            </a>
+                        </td>
+                    }
+                    <td><a asp-area="Workers" asp-controller="CoachUsers" asp-action="View" asp-route-id="@viewCoachViewModel.CoachUser.Id" target="_blank">Подробно</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="content-footer rounded-bottom">
+    </div>
+</div>

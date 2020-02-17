@@ -1,0 +1,36 @@
+﻿@model Sporthall.WebUI.ViewModels.Workers.CoachUsers.ViewCoachInfoViewModel
+
+@{
+    ViewData["Title"] = "Удаление тренера";
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Удаление тренера
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <partial name="~/Areas/Workers/Views/CoachUsers/Partials/_DetailsPartial.cshtml" />
+    </div>
+    <div class="content-footer rounded-bottom">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-2 text-center text-sm-left">
+            </div>
+            <div class="col-sm-auto my-2">
+                <form asp-area="Workers" asp-controller="CoachUsers" asp-action="Delete" asp-route-id="@Model.CoachUser.Id" method="post">
+                    <partial name="_ConfirmDeleteModalPartial" />
+                    <button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#confirmDeleteModal">
+                        Удалить
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

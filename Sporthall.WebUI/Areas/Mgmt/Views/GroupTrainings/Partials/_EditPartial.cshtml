@@ -1,0 +1,232 @@
+﻿@model Sporthall.WebUI.ViewModels.Trainings.Group.EditGroupTrainingViewModel
+
+@{
+    ViewData["Title"] = "Добавить групповую тренировку";
+}
+
+<script>
+        $(function () {
+            $("#trainingDate").daterangepicker({
+                singleDatePicker: true,
+                minDate: "@DateTime.MinValue.ToShortDateString()",
+                maxDate: "@DateTime.MaxValue.ToShortDateString()",
+                locale: {
+                    format: "DD.MM.YYYY",
+                    separator: " - ",
+                    daysOfWeek: [ "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс" ],
+                    monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+                    firstDay: 1
+                }
+            });
+            $("#trainingTimeRange").daterangepicker({
+                    timePicker : true,
+                    timePicker24Hour : true,
+                    timePickerIncrement: 1,
+                    locale : {
+                        format: 'HH:mm',
+                        applyLabel: "Применить",
+                        cancelLabel: "Отмена"
+                    }
+                }).on("show.daterangepicker", function(ev, picker) {
+                    picker.container.find(".calendar-table").remove();
+                });
+
+            $("form").first().on("submit", function () {
+                let formElem = $(this);
+                let timeRangeInput = formElem.find("#trainingTimeRange");
+                let beginTimeInput =  formElem.find("#beginTime");
+                let endTimeInput = formElem.find("#endTime");
+                let times = timeRangeInput.val().split(" - ");
+                beginTimeInput.val(times[0]);
+                endTimeInput.val(times[1]);
+            });
+        });
+</script>
+
+<div class="row justify-content-between">
+    <div class="col-md my-2">
+        <div class="form-group mb-4">
+            <label asp-for="Name" class="list-header">
+                <i class="far fa-heading pr-1"></i>
+                Название
+            </label>
+            <input asp-for="Name" class="form-control form-control-sm"/>
+            <span class="text-danger small" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Description" class="list-header">
+                <i class="far fa-comment-alt pr-1"></i>
+                Описание
+            </label>
+            <textarea rows="7" asp-for="Description" class="form-control"></textarea>
+            <span class="text-danger small" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label class="list-header">
+                <i class="far fa-calendar-alt pr-1"></i>
+                Дата тренеровки
+            </label>
+            <input id="trainingDate" asp-for="Date" type="text" asp-format="{0:dd.MM.yyyy}" class="form-control form-control-sm">
+        </div>
+        <div class="form-group mb-4">
+            <label class="list-header">
+                <i class="far fa-clock pr-1"></i>
+                Время тренеровки
+            </label>
+            <input id="trainingTimeRange" class="form-control form-control-sm" value="@Model.BeginTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")" />
+            <input type="hidden" asp-for="BeginTime" id="beginTime" />
+            <input type="hidden" asp-for="EndTime" id="endTime" />
+        </div>
+        <div class="form-group mb-4">
+            <label class="list-header">
+                <i class="fas fa-calculator pr-1"></i>
+                Максимальное количество мест
+            </label>
+            <input asp-for="Capacity" class="form-control form-control-sm">
+            <span class="text-danger small" asp-validation-for="Capacity"></span>
+        </div>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Зал для этой тренеровки
+        </div>
+        <ul class="list overflow-auto" style="max-height:400px">
+            <li>
+                <div class="row no-gutters justify-content-between align-items-center mb-3">
+                    <div class="col-auto">
+                        <div class="custom-control custom-radio">
+                            <input checked="checked" id="noHallRadio" type="radio" asp-for="SelectedHall.Id" value="-1" class="custom-control-input">
+                            <label class="custom-control-label" for="noHallRadio"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            Без зала
+                        </div>
+                        <div>
+                            Назначить зал потом
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @if (Model.HallsForSelect != null && Model.HallsForSelect.Count > 0)
+            {
+                for (var i = 0; i < Model.HallsForSelect.Count; i++)
+                {
+            <li>
+                <div class="row no-gutters justify-content-between align-items-center mb-3">
+                    <div class="col-auto">
+                        <input type="hidden" asp-for="HallsForSelect[i].Id" />
+                        <div class="custom-control custom-radio">
+                            <input id="hallRadio-@i" type="radio" asp-for="SelectedHall.Id" value="@Model.HallsForSelect[i].Id" class="custom-control-input">
+                            <label class="custom-control-label" for="hallRadio-@i"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            @Model.HallsForSelect[i].Description
+                        </div>
+                        <div>
+                            <i class="fas fa-map-marked-alt pr-1"></i>
+                            @Model.HallsForSelect[i].Address
+                        </div>
+                        <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@Model.HallsForSelect[i].Id" target="_blank">Просмотр</a>
+                    </div>
+                </div>
+            </li>
+                }
+            }
+            else
+            {
+            <li>
+                Нет доступных залов
+            </li>
+            }
+        </ul>
+        <div class="list-header">
+            <i class="fas fa-chalkboard-teacher pr-1"></i>
+            Тренеры для этой тренеровки
+        </div>
+        <ul class="list overflow-auto" style="max-height:400px">
+            @if (Model.CoachUserSelects != null && Model.CoachUserSelects.Count > 0)
+            {
+            @for (var i = 0; i < Model.CoachUserSelects.Count; i++)
+                {
+            <li>
+                <div class="row no-gutters justify-content-between align-items-center mb-3">
+                    <div class="col-auto">
+                        <input type="hidden" asp-for="CoachUserSelects[i].Model.Id" />
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" asp-for="CoachUserSelects[i].Selected" class="custom-control-input" id="coachCheck-@i">
+                            <label class="custom-control-label" for="coachCheck-@i"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            @Model.CoachUserSelects[i].Model.FirstName  @Model.CoachUserSelects[i].Model.LastName @Model.CoachUserSelects[i].Model.SurName
+                        </div>
+                        <a asp-area="Workers" asp-controller="CoachUsers" asp-action="View" asp-route-id="@Model.CoachUserSelects[i].Model.Id" target="_blank">
+                            Просмотр
+                        </a>
+                    </div>
+                </div>
+            </li>
+                }
+            }
+            else
+            {
+            <li>
+                Нет доступных тренеров
+            </li>
+            }
+        </ul>
+        <div class="list-header">
+            <i class="fas fa-users pr-1"></i>
+            Клиенты для этой тренеровки
+        </div>
+        <ul class="list overflow-auto" style="max-height:400px">
+            @if (Model.ClientUserSelects != null && Model.ClientUserSelects.Count > 0)
+            {
+            @for (var i = 0; i < Model.ClientUserSelects.Count; i++)
+                {
+            <li>
+                <div class="row no-gutters justify-content-between align-items-center mb-3">
+                    <div class="col-auto">
+                        <input type="hidden" asp-for="ClientUserSelects[i].Model.Id" />
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" asp-for="ClientUserSelects[i].Selected" class="custom-control-input" id="clientCheck-@i">
+                            <label class="custom-control-label" for="clientCheck-@i"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            @Model.ClientUserSelects[i].Model.FirstName  @Model.ClientUserSelects[i].Model.LastName @Model.ClientUserSelects[i].Model.SurName
+                        </div>
+                        <div class="font-weight-normal">
+                            <i class="fas fa-user pr-1"></i>
+                            @@@Model.ClientUserSelects[i].Model.UserName @Model.ClientUserSelects[i].Model.Email
+                        </div>
+                        <div class="small">
+                            id: @Model.ClientUserSelects[i].Model.Id
+                        </div>
+                        <div>
+                            <a asp-area="" asp-controller="Profiles" asp-action="View" asp-route-id="@Model.ClientUserSelects[i].Model.Id" target="_blank">
+                                Просмотр
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+                }
+            }
+            else
+            {
+            <li>
+                Нет доступных клиентов
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+<div asp-validation-summary="All"></div>

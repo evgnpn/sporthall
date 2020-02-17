@@ -1,0 +1,109 @@
+﻿@model Sporthall.WebUI.ViewModels.Profile.ViewProfileViewModel
+
+@{
+    ViewData["Title"] = "Профиль пользователя";
+    var user = new User { Id = Model.Id };
+}
+
+<div class="content shadow-sm">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    @Model.LastName @Model.FirstName
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <div class="row">
+            <div class="col-md my-2">
+                <div class="list-header">
+                    <i class="fas fa-dumbbell pr-1"></i>
+                    Тренировки (индивидуальные):
+                </div>
+                <ul class="list">
+                    @if (Model.SoloTrainings != null && Model.SoloTrainings.Count > 0)
+                    {
+
+                        @foreach (var soloTraining in Model.SoloTrainings)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Solo" asp-action="View" asp-route-id="@soloTraining.Id">
+                                    @soloTraining.Description
+                                </a>
+                                <span class="font-weight-normal pl-1">
+                                    (@soloTraining.Date.ToShortDateString() с @soloTraining.BeginTime.ToString(@"hh\:mm") до @soloTraining.EndTime.ToString(@"hh\:mm"))
+                                </span>
+                            </li>
+                        }
+
+                    }
+                    else
+                    {
+                        <li class="list-unstyled">
+                            нет записей
+                        </li>
+                    }
+                </ul>
+                <div class="list-header">
+                    <i class="fas fa-user-alt pr-1"></i>
+                    Тренировки (групповые):
+                </div>
+                <ol class="list m-0">
+
+                    @if (Model.GroupTrainings != null && Model.GroupTrainings.Count > 0)
+                    {
+                        @foreach (var groupTraining in Model.GroupTrainings)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id">
+                                    @groupTraining.Description
+                                </a>
+                                <span class="font-weight-normal pl-1">
+                                    (@groupTraining.Date.ToShortDateString() с @groupTraining.BeginTime.ToString(@"hh\:mm") до @groupTraining.EndTime.ToString(@"hh\:mm"))
+                                </span>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="list-unstyled">
+                            нет записей
+                        </li>
+                    }
+                </ol>
+            </div>
+            <div class="col-md my-2">
+                <div class="list-header">
+                    <i class="fas fa-chalkboard-teacher pr-1"></i>
+                    Тренеры
+                </div>
+                <ol class="list m-0">
+
+                    @*@if (Model.ViewCoachInfoViewModel != null)
+                        {
+
+                            @foreach (var trainer in Model.ViewCoachInfoViewModel.)
+                            {
+                                <li>
+                                    <a asp-area="Workers" asp-controller="CoachUsers" asp-action="View" asp-route-id="@trainer.Id" target="_blank">
+                                        @trainer.User.FirstName  @trainer.User.LastName @trainer.User.SurName
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-unstyled">
+                                нет записей
+                            </li>
+                        }*@
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="content-footer rounded-bottom">
+    </div>
+</div>

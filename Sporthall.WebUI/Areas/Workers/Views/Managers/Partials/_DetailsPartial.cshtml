@@ -1,0 +1,42 @@
+﻿@model Sporthall.WebUI.ViewModels.Workers.Managers.ViewManagerInfoViewModel
+
+<div class="row">
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-dumbbell pr-1"></i>
+            Менаджер
+        </div>
+        <ul class="list">
+            <li>Фамилия: @Model.ManagerUser.LastName</li>
+            <li>Имя: @Model.ManagerUser.FirstName</li>
+            <li>Отчество: @Model.ManagerUser.SurName</li>
+            <li>Телефон: @Model.ManagerUser.PhoneNumber</li>
+        </ul>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Места работы менеджера:
+        </div>
+        <ol class="list">
+            @if (Model.Halls != null && Model.Halls.Count > 0)
+            {
+                @foreach (var hall in Model.Halls)
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@hall.Id">
+                            @hall.Name
+                        </a>
+                        <span class="font-weight-normal pl-1">(@hall.Address)</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет информации
+                </li>
+            }
+        </ol>
+    </div>
+</div>

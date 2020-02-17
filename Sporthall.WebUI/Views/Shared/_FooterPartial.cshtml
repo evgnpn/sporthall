@@ -1,0 +1,93 @@
+﻿@inject IUnitOfWork unitOfWork
+
+@{
+    var soloTrainings = (await unitOfWork.SoloTrainingRepository.GetAllRangeAsync(0, 5)).ToList();
+    var groupTrainings = (await unitOfWork.GroupTrainingRepository.GetAllRangeAsync(0, 5)).ToList();
+    var halls = (await unitOfWork.HallRepository.GetAllRangeAsync(0, 5)).ToList();
+}
+
+<footer>
+    <div class="container">
+        <div class="row py-3 justify-content-md-between">
+            <div class="col-7 col-sm-6 col-md-3 my-2 d-flex">
+                <div class="ls-group">
+                    <a class="ls-header" asp-area="Trainings" asp-controller="Solo" asp-action="Index">
+                        <i class="fas fa-dumbbell pr-1"></i>
+                        Индивидуальные тренеровки
+                    </a>
+                    <ul class="ls">
+                        @for (var i = 0; i < soloTrainings?.Count; i++)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Solo" asp-action="View" asp-route-id="@soloTrainings[i].Id">
+                                    @soloTrainings[i].Name (@soloTrainings[i].Date.ToString("dd.MM.yyyy") @soloTrainings[i].BeginTime.ToString(@"hh\:mm")-@soloTrainings[i].EndTime.ToString(@"hh\:mm"))
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-7 col-sm-6 col-md-3 my-2 d-flex">
+                <div class="ls-group">
+                    <a class="ls-header" asp-area="Trainings" asp-controller="Group" asp-action="Index">
+                        <i class="fas fa-dumbbell pr-1"></i>
+                        Групповые тренеровки
+                    </a>
+                    <ul class="ls">
+                        @for (var i = 0; i < groupTrainings?.Count; i++)
+                        {
+                            <li>
+                                <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTrainings[i].Id">
+                                    @groupTrainings[i].Name (@groupTrainings[i].Date.ToString("dd.MM.yyyy") @groupTrainings[i].BeginTime.ToString(@"hh\:mm")-@groupTrainings[i].EndTime.ToString(@"hh\:mm"))
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-7 col-sm-6 col-md-2 my-2 d-flex">
+                <div class="ls-group">
+                    <a class="ls-header" asp-area="" asp-controller="Halls" asp-action="Index">
+                        <i class="far fa-building pr-1"></i>
+                        Залы
+                    </a>
+                    <ul class="ls">
+                        @for (var i = 0; i < halls?.Count; i++)
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@halls[i].Id">
+                                    @halls[i].Name (@halls[i].Address)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-7 col-sm-6 col-md-2 my-2 d-flex">
+                <div class="ls-group">
+                    <ul class="ls">
+                        <li>
+                            <a href="#">Контакты</a>
+                        </li>
+                        <li>
+                            <a href="#">О нас</a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="CoachUsers" asp-action="Index">
+                                Тренеры
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Workers" asp-controller="Managers" asp-action="Index">
+                                Менеджеры
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-7 col-sm-6 col-md-2 my-2">
+                <img src="~/img/phoenix.jpg" alt="logo" style="width: 100%;" />
+            </div>
+        </div>
+    </div>
+</footer>

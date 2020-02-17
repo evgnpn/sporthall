@@ -1,0 +1,76 @@
+﻿@model Sporthall.WebUI.ViewModels.Trainings.Solo.ViewSoloTrainingViewModel
+
+<div class="row">
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-dumbbell pr-1"></i>
+            Тренеровка:
+        </div>
+        <ul class="list">
+            <li>Описание: @Model.Description</li>
+            <li>Дата: @Model.Date.ToShortDateString()</li>
+            <li>Время: с @Model.BeginTime.ToString(@"hh\:mm") до @Model.EndTime.ToString(@"hh\:mm")</li>
+        </ul>
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Зал:
+        </div>
+        <ul class="list">
+            @if (Model.Hall != null)
+            {
+            <li>Адрес: @Model.Hall.Address</li>
+            <li>Телефон: @Model.Hall.PhoneNumber</li>
+            <li>Описание: @Model.Hall.Description</li>
+            }
+            else
+            {
+            <li class="list-unstyled">
+                нет информации
+            </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-chalkboard-teacher pr-1"></i>
+            Тренеры:
+        </div>
+        <ol class="list">
+            @if (Model.CoachUsers != null && Model.CoachUsers.Count > 0)
+            {
+            @foreach (var coachUser in Model.CoachUsers)
+                {
+            <li>
+                <a asp-area="" asp-controller="Profiles" asp-action="View" asp-route-id="@coachUser.Id">
+                    @coachUser.FirstName @coachUser.SurName @coachUser.LastName
+                </a>
+            </li>
+                }
+            }
+            else
+            {
+            <li class="list-unstyled">
+                нет информации
+            </li>
+            }
+        </ol>
+        <div class="list-header">
+            <i class="fas fa-user pr-1"></i>
+            Клиент:
+        </div>
+        <ol class="list">
+            @if (Model.ClientUser != null)
+            {
+            <li>
+                @Model.ClientUser.FirstName  @Model.ClientUser.SurName  @Model.ClientUser.LastName
+            </li>
+            }
+            else
+            {
+            <li style="list-style:none">
+                отсутствует
+            </li>
+            }
+        </ol>
+    </div>
+</div>

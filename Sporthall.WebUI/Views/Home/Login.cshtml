@@ -1,0 +1,70 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - sporthall</title>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center">
+            <div class="col col-sm-8 col-lg-5">
+                <div class="content shadow-lg">
+                    <div class="content-header rounded-top">
+                        <div class="row justify-content-between align-items-center justify-content-center">
+                            <div class="col-sm my-3">
+                                <h6 class="content-title">
+                                    <i class="fas fa-user pr-1"></i>
+                                    Вход
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <form id="login-form" asp-area="" asp-controller="Home" asp-action="Login" method="post">
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input type="text" asp-for="UserName" class="form-control" />
+                                <span class="text-danger small" asp-validation-for="UserName"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input type="password" asp-for="Password" class="form-control" />
+                                <span class="text-danger small" asp-validation-for="Password"></span>
+                            </div>
+                            <div asp-validation-summary="All"></div>
+                        </form>
+                    </div>
+                    <div class="content-footer rounded-bottom">
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="custom-control custom-checkbox my-2">
+                                <input asp-for="Remember" type="checkbox" class="custom-control-input" form="login-form">
+                                <label asp-for="Remember" class="custom-control-label">Запомнить меня</label>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-block my-2" form="login-form">
+                                Войти
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@*@model ViewTrainingViewModel<SoloTraining>
+
+    @if (Model.TrainingStatus == TrainingStatus.Waiting &&
+    Model.TrainingSubscribeStatus == TrainingSubscribeStatus.Allowed)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            <form asp-area="Trainings" asp-controller="Solo" asp-action="Subscribe" asp-route-soloTrainingId="@Model.Training.Id" method="post">
+                <button type="submit" class="btn btn-sm btn-info btn-block">
+                    Записаться
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </form>
+        }
+        else
+        {
+            <form asp-area="" asp-controller="Home" asp-action="Login" method="get">
+                <button type="submit" class="btn btn-sm btn-info btn-block">
+                    Войти и записаться
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </form>
+        }
+    }
+    else if (Model.TrainingStatus == TrainingStatus.Waiting &&
+            Model.TrainingSubscribeStatus == TrainingSubscribeStatus.Already)
+    {
+        <form asp-area="Trainings" asp-controller="Solo" asp-action="Unsubscribe" asp-route-soloTrainingId="@Model.Training.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-danger btn-block">
+                Отмена записи
+                <i class="fas fa-ban"></i>
+            </button>
+        </form>
+    }
+    else if (Model.TrainingStatus == TrainingStatus.InProcess)
+    {
+        <button type="submit" class="btn btn-sm btn-info btn-block" disabled>
+            Запись не доступна
+            <i class="fas fa-user-plus"></i>
+        </button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-sm btn-info btn-block" disabled>
+            Запись не доступна
+            <i class="fas fa-user-plus"></i>
+        </button>
+    }*@

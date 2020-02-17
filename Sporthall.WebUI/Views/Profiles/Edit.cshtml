@@ -1,0 +1,90 @@
+﻿@model Sporthall.WebUI.ViewModels.Profile.UpdateProfileViewModel
+
+@{
+    ViewData["Title"] = "Изменить профиль";
+}
+
+<div class="content mb-3">
+    <div class="content-header rounded-top">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-sm my-3">
+                <h6 class="content-title">
+                    <i class="fas fa-info-circle pr-1"></i>
+                    Изменить профиль пользователя
+                </h6>
+            </div>
+        </div>
+    </div>
+
+    <form asp-area="" asp-controller="Profiles" asp-action="Edit" method="post">
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md my-2">
+                    <div class="list-header">
+                        <i class="fas fa-dumbbell pr-1"></i>
+                        Персональные данные:
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <div class="form-group mb-2">
+                                <label asp-for="LastName" class="mb-1">Фамилия</label>
+                                <input asp-for="LastName" class="form-control form-control-sm" />
+                                <span class="text-danger small" asp-validation-for="LastName"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group mb-2">
+                                <label asp-for="FirstName" class="mb-1">Имя</label>
+                                <input asp-for="FirstName" class="form-control form-control-sm" />
+                                <span class="text-danger small" asp-validation-for="FirstName"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group mb-2">
+                                <label asp-for="UserName" class="mb-1">Имя пользователя</label>
+                                <input asp-for="UserName" class="form-control form-control-sm" />
+                                <span class="text-danger small" asp-validation-for="UserName"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md my-2">
+                    <div class="list-header">
+                        <i class="fas fa-address-book pr-1"></i>
+                        Связь:
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <div class="form-group mb-2">
+                                <label asp-for="PhoneNumber" class="mb-1">Номер телефона</label>
+                                <input asp-for="PhoneNumber" class="form-control form-control-sm" />
+                                <span class="text-danger small" asp-validation-for="PhoneNumber"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group mb-2">
+                                <label asp-for="Email" class="mb-1">Почтовый адрес</label>
+                                <input asp-for="Email" class="form-control form-control-sm" />
+                                <span class="text-danger small" asp-validation-for="Email"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div asp-validation-summary="All"></div>
+        </div>
+        <div class="content-footer rounded-bottom">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-sm my-2 text-center text-sm-left">
+                </div>
+                <div class="col-sm-auto my-2">
+                    <button type="submit" class="btn btn-sm btn-info btn-block">
+                        Сохранить
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

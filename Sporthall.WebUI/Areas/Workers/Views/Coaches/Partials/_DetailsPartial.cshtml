@@ -1,0 +1,91 @@
+﻿@model Sporthall.WebUI.ViewModels.Workers.CoachUsers.ViewCoachInfoViewModel
+
+<div class="row">
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-chalkboard-teacher pr-1"></i>
+            Тренер:
+        </div>
+        <ul class="list">
+            <li>Фамилия: @Model.CoachUser.LastName</li>
+            <li>Имя: @Model.CoachUser.FirstName</li>
+            <li>Отчество: @Model.CoachUser.SurName</li>
+            <li>Телефон: @Model.CoachUser.PhoneNumber</li>
+            <li>Специальность: @Model.Speciality</li>
+        </ul>
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Места работы тренера:
+        </div>
+        <ol class="list">
+            @if (Model.Halls != null && Model.Halls.Count > 0)
+            {
+                @foreach (var hall in Model.Halls)
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@hall.Id">
+                            @hall.Name
+                        </a>
+                        <span class="font-weight-normal pl-1">(@hall.Address)</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет информации
+                </li>
+            }
+        </ol>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-user-alt pr-1"></i>
+            Индивидуальные тренировки тренера:
+        </div>
+        <ol class="list">
+            @if (Model.SoloTrainings != null && Model.SoloTrainings.Count > 0)
+            {
+                @foreach (var soloTraining in Model.SoloTrainings)
+                {
+                    <li>
+                        <a asp-area="Trainings" asp-controller="Solo" asp-action="View" asp-route-id="@soloTraining.Id">
+                            @soloTraining.Description
+                        </a>
+                        <span class="font-weight-normal pl-1">(@soloTraining.Date.ToShortDateString() с @soloTraining.BeginTime.ToString(@"hh\:mm") до @soloTraining.EndTime.ToString(@"hh\:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет информации
+                </li>
+            }
+        </ol>
+        <div class="list-header">
+            <i class="fas fa-users pr-1"></i>
+            Групповые тренировки тренера:
+        </div>
+        <ol class="list">
+            @if (Model.GroupTrainings != null && Model.GroupTrainings.Count > 0)
+            {
+                @foreach (var groupTraining in Model.GroupTrainings)
+                {
+                    <li>
+                        <a asp-area="Trainings" asp-controller="Group" asp-action="View" asp-route-id="@groupTraining.Id">
+                            @groupTraining.Description
+                        </a>
+                        <span class="font-weight-normal pl-1">(@groupTraining.Date.ToShortDateString() с @groupTraining.BeginTime.ToString(@"hh\:mm") до @groupTraining.EndTime.ToString(@"hh\:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-unstyled">
+                    нет информации
+                </li>
+            }
+        </ol>
+    </div>
+</div>

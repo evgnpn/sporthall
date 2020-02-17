@@ -1,0 +1,98 @@
+﻿@model Sporthall.WebUI.ViewModels.Workers.CoachUsers.UpdateCoachInfoViewModel
+
+<div class="row justify-content-between">
+    <div class="col-md my-2">
+        <div class="form-group mb-4">
+            <label asp-for="Speciality" class="list-header">
+                <i class="fas fa-user-tag pr-1"></i>
+                Специальность
+            </label>
+            <input asp-for="Speciality" class="form-control form-control-sm" />
+            <span asp-validation-for="Speciality" class="text-danger small"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Description" class="list-header">
+                <i class="far fa-question-circle pr-1"></i>
+                Описание
+            </label>
+            <input asp-for="Description" class="form-control form-control-sm" />
+            <span asp-validation-for="Description" class="text-danger small"></span>
+        </div>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="fas fa-user pr-1"></i>
+            Профиль тренера
+        </div>
+        <ul class="list overflow-auto" style="max-height:600px">
+            @if (Model.UsersForSelect != null && Model.UsersForSelect.Count > 0)
+            {
+                @for (var i = 0; i < Model.UsersForSelect.Count; i++)
+                {
+                    <li>
+                        <input type="hidden" asp-for="UsersForSelect[i].Id" />
+                        <div class="row no-gutters justify-content-between align-items-center mb-3">
+                            <div class="col-auto">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" asp-for="SelectedUser.Id" value="@Model.UsersForSelect[i].Id" class="custom-control-input" id="userRadio-@i">
+                                    <label class="custom-control-label" for="userRadio-@i"></label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div>
+                                    @Model.UsersForSelect[i].FirstName @Model.UsersForSelect[i].LastName @Model.UsersForSelect[i].SurName
+                                </div>
+                                <div class="font-weight-normal">
+                                    <i class="fas fa-user pr-1"></i>
+                                    @@@Model.UsersForSelect[i].UserName @Model.UsersForSelect[i].Email
+                                </div>
+                                <div class="small">
+                                    id: @Model.UsersForSelect[i].Id
+                                </div>
+                                <div>
+                                    <a asp-area="" asp-controller="Profiles" asp-action="View" asp-route-id="@Model.UsersForSelect[i].Id" target="_blank">
+                                        Просмотр
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md my-2">
+        <div class="list-header">
+            <i class="far fa-building pr-1"></i>
+            Залы где работает этот тренер
+        </div>
+        <ul class="list overflow-auto" style="max-height:400px">
+            @if (Model.HallSelects != null && Model.HallSelects.Count > 0)
+            {
+                @for (var i = 0; i < Model.HallSelects.Count; i++)
+                {
+                    <li>
+                        <input type="hidden" asp-for="HallSelects[i].Model.Id" />
+                        <div class="row no-gutters justify-content-between align-items-center mb-3">
+                            <div class="col-auto">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" asp-for="HallSelects[i].Selected" class="custom-control-input" id="hallCheck-@i">
+                                    <label class="custom-control-label" for="hallCheck-@i"></label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div>
+                                    @Model.HallSelects[i].Model.Name
+                                </div>
+                                <a asp-area="" asp-controller="Halls" asp-action="View" asp-route-id="@Model.HallSelects[i].Model.Id" target="_blank">
+                                    Просмотр
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+<div asp-validation-summary="All"></div>

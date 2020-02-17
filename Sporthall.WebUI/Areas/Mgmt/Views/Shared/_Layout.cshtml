@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="management-split">
+    <div class="management-menu">
+        <div>
+            <div class="list-header">
+                <i class="fas fa-edit pr-1"></i>
+                Управление
+            </div>
+            <ul class="list list-vertical-line">
+                <li>
+                    <a asp-area="Management" asp-controller="Halls" asp-action="Index">Залы</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="SoloTrainings" asp-action="Index">Индивидуальные тренеровки</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="GroupTrainings" asp-action="Index">Групповые тренеровки</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="Coaches" asp-action="Index">Тренера</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="Managers" asp-action="Index">Менеджеры</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="Accounts" asp-action="Index">Аккаунты</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="list-header">
+                <i class="fas fa-plus pr-1"></i>
+                Добавить
+            </div>
+            <ul class="list list-vertical-line">
+                <li>
+                    <a asp-area="Management" asp-controller="Halls" asp-action="Index">Зал</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="SoloTrainings" asp-action="Index">Индивидуальную тренеровку</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="GroupTrainings" asp-action="Index">Групповую тренеровку</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="Coaches" asp-action="Index">Тренера</a>
+                </li>
+                <li>
+                    <a asp-area="Management" asp-controller="Managers" asp-action="Index">Менеджера</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="management-content">
+        @RenderBody()
+    </div>
+</div>

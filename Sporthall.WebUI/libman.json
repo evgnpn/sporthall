@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validation@1.19.1",
+      "destination": "wwwroot/lib/jquery-validation/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot/lib/jquery-ajax-unobtrusive/"
+    },
+    {
+      "library": "bootstrap@4.4.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "@spectrum-css/spectrum-css@3.0.0-alpha.0",
+      "destination": "wwwroot/lib/spectrum-css/"
+    },
+    {
+      "library": "@fortawesome/fontawesome-free@5.12.1",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "daterangepicker@3.0.5",
+      "destination": "wwwroot/lib/daterangepicker/"
+    },
+    {
+      "library": "materialize-css@1.0.0",
+      "destination": "wwwroot/lib/materialize/"
+    }
+  ]
+}
